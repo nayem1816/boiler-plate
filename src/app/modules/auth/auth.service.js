@@ -1,17 +1,19 @@
-const User = require("../User/user.model");
-const bcrypt = require("bcrypt");
-const jwtHelpers = require("../../../helpers/jwtHelpers");
+const bcrypt = require('bcrypt');
+const User = require('../User/user.model');
+const jwtHelpers = require('../../../helpers/jwtHelpers');
+const ApiError = require('../../../errors/apiError');
+const config = require('../../../config/config');
 
-const loginService = async (payload) => {
+const loginService = async payload => {
   const { email, password } = payload;
 
   const isExistUser = await User.findOne({
     email,
-    userStatus: "Active",
+    userStatus: 'Active',
   });
 
   if (!isExistUser) {
-    throw new ApiError(400, "User does not exist");
+    throw new ApiError(400, 'User does not exist');
   }
 
   const { _id, role } = isExistUser;
@@ -21,19 +23,19 @@ const loginService = async (payload) => {
   };
 
   if (!isMatchPassword) {
-    throw new ApiError(400, "Invalid credentials");
+    throw new ApiError(400, 'Invalid credentials');
   }
 
   const accessToken = jwtHelpers.createToken(
     { _id, email, role },
     config.jwt.secret,
-    config.jwt.expires_in
+    config.jwt.expires_in,
   );
 
   const refreshToken = jwtHelpers.createToken(
     { _id, email, role },
     config.jwt.refresh_secret,
-    config.jwt.refresh_expires_in
+    config.jwt.refresh_expires_in,
   );
 
   return {
@@ -43,8 +45,8 @@ const loginService = async (payload) => {
   };
 };
 
-const refreshToken = async (token) => {
-  //verify token
+const refreshToken = async token => {
+  // verify token
   // invalid token - synchronous
   let verifiedToken = null;
   try {
@@ -52,7 +54,7 @@ const refreshToken = async (token) => {
   } catch (error) {
     // throw new ApiError(422, "Invalid Refresh Token");
     return {
-      error: "Invalid Refresh Token",
+      error: 'Invalid Refresh Token',
       status: 422,
     };
   }
@@ -64,9 +66,9 @@ const refreshToken = async (token) => {
 
   const isUserExist = await User.findById(_id);
   if (!isUserExist) {
-    throw new ApiError(404, "User does not exist");
+    throw new ApiError(404, 'User does not exist');
   }
-  //generate new token
+  // generate new token
 
   const newAccessToken = jwtHelpers.createToken(
     {
@@ -75,7 +77,7 @@ const refreshToken = async (token) => {
       role: isUserExist.role,
     },
     config.jwt.secret,
-    config.jwt.expires_in
+    config.jwt.expires_in,
   );
 
   return {

@@ -1,6 +1,6 @@
-const config = require("../../../config/config");
-const sendResponse = require("../../../shared/sendResponse");
-const AuthService = require("./auth.service");
+const config = require('../../../config/config');
+const sendResponse = require('../../../shared/sendResponse');
+const AuthService = require('./auth.service');
 
 const login = async (req, res, next) => {
   try {
@@ -9,19 +9,18 @@ const login = async (req, res, next) => {
 
     // set refresh token into cookie
     const cookieOptions = {
-      secure: config.env === "production",
+      secure: config.env === 'production',
       httpOnly: true,
-      sameSite: "strict",
-      secure: true,
+      sameSite: 'strict',
     };
 
-    res.cookie("refreshToken", refreshToken, cookieOptions);
-    res.cookie("accessToken", accessToken, cookieOptions);
+    res.cookie('refreshToken', refreshToken, cookieOptions);
+    res.cookie('accessToken', accessToken, cookieOptions);
 
     sendResponse(res, {
       statusCode: 200,
       success: true,
-      message: "User logged in successfully!",
+      message: 'User logged in successfully!',
       data: {
         user,
         accessToken,
@@ -43,23 +42,22 @@ const refreshToken = async (req, res) => {
       success: false,
       message: result.error,
     });
-  } else {
-    // set refresh token into cookie
-    const cookieOptions = {
-      secure: config.env === "production",
-      httpOnly: true,
-      sameSite: "strict",
-    };
-
-    res.cookie("refreshToken", refreshToken, cookieOptions);
-
-    sendResponse(res, {
-      statusCode: 200,
-      success: true,
-      message: "Token refreshed successfully!",
-      data: result,
-    });
   }
+  // set refresh token into cookie
+  const cookieOptions = {
+    secure: config.env === 'production',
+    httpOnly: true,
+    sameSite: 'strict',
+  };
+
+  res.cookie('refreshToken', refreshToken, cookieOptions);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: 'Token refreshed successfully!',
+    data: result,
+  });
 };
 
 module.exports = {

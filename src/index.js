@@ -2,8 +2,6 @@ const mongoose = require('mongoose');
 const app = require('./app');
 const config = require('./config/config');
 
-console.log('cdvefegr');
-
 async function main() {
   try {
     await mongoose.connect(config.database_url);

@@ -1,7 +1,7 @@
-const multer = require("multer");
-const cloudinary = require("cloudinary");
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
-const config = require("../../config/config");
+const multer = require('multer');
+const cloudinary = require('cloudinary');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const config = require('../../config/config');
 
 cloudinary.v2.config({
   cloud_name: config.cloudinary.cloud_name,
@@ -20,18 +20,18 @@ const storage = new CloudinaryStorage({
   cloudinary: cloudinary.v2,
   params: {
     folder: generateFolder,
-    resource_type: "auto",
+    resource_type: 'auto',
   },
 });
 
 const upload = multer({
-  storage: storage,
+  storage,
   limits: {
     fileSize: 3000000, // 3MB
   },
   fileFilter(req, file, cb) {
     if (!file.originalname.match(/\.(jpg|jpeg|png|webp|gif)$/)) {
-      return cb(new Error("Please upload an image"));
+      return cb(new Error('Please upload an image'));
     }
 
     cb(null, true);
@@ -41,7 +41,7 @@ const upload = multer({
 const UploadImageCloudinary = upload;
 
 // Delete image from cloudinary
-const deleteImageCloudinary = async (public_id) => {
+const deleteImageCloudinary = async public_id => {
   try {
     await cloudinary.v2.uploader.destroy(public_id);
   } catch (error) {

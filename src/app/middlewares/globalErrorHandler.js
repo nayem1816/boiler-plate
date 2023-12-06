@@ -1,18 +1,18 @@
-const ApiError = require("../../errors/apiError");
-const handleCastError = require("../../errors/handleCastError");
-const handleValidationError = require("../../errors/handleValidationError");
+const ApiError = require('../../errors/apiError');
+const handleCastError = require('../../errors/handleCastError');
+const handleValidationError = require('../../errors/handleValidationError');
 
-const globalErrorHandler = (error, req, res, next) => {
+const globalErrorHandler = (error, res) => {
   let statusCode = 500;
-  let message = "Something went wrong!";
+  let message = 'Something went wrong!';
   let errorMessages = [];
 
-  if (error?.name === "ValidationError") {
+  if (error?.name === 'ValidationError') {
     const simplifiedError = handleValidationError(error);
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessages = simplifiedError.errorMessages;
-  } else if (error?.name === "CastError") {
+  } else if (error?.name === 'CastError') {
     const simplifiedError = handleCastError(error);
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
@@ -26,7 +26,7 @@ const globalErrorHandler = (error, req, res, next) => {
     errorMessages = error?.message
       ? [
           {
-            path: "",
+            path: '',
             message: error?.message,
           },
         ]
@@ -36,7 +36,7 @@ const globalErrorHandler = (error, req, res, next) => {
     errorMessages = error?.message
       ? [
           {
-            path: "",
+            path: '',
             message: error?.message,
           },
         ]

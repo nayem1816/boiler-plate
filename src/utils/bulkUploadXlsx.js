@@ -1,13 +1,13 @@
-const ExcelJS = require("exceljs");
+const ExcelJS = require('exceljs');
 
 const bulkUploadXlsx = async (res, data, fileName) => {
   // Create a new Excel workbook
   const workbook = new ExcelJS.Workbook();
-  const worksheet = workbook.addWorksheet("ShareHappinessData");
+  const worksheet = workbook.addWorksheet('ShareHappinessData');
 
-  const dynamicColumns = Object.keys(data[0]).map((key) => ({
+  const dynamicColumns = Object.keys(data[0]).map(key => ({
     header: key,
-    key: key,
+    key,
   }));
 
   worksheet.columns = dynamicColumns;
@@ -17,10 +17,10 @@ const bulkUploadXlsx = async (res, data, fileName) => {
 
   // Set response headers for the XLSX file download
   res.setHeader(
-    "Content-Type",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    'Content-Type',
+    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
   );
-  res.setHeader("Content-Disposition", `attachment; filename=${fileName}.xlsx`);
+  res.setHeader('Content-Disposition', `attachment; filename=${fileName}.xlsx`);
 
   // Pipe the workbook to the response
   await workbook.xlsx.write(res);

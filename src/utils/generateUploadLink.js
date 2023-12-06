@@ -1,7 +1,7 @@
 const generateUploadLink = (req, image) => {
-  const url = req.get("host");
-  const protocol = req.protocol;
-  const imageLink = protocol + "://" + url + "/images/" + image.filename;
+  const url = req.get('host');
+  const { protocol } = req;
+  const imageLink = `${protocol}://${url}/images/${image.filename}`;
 
   let imageData = {};
   if (imageLink) {

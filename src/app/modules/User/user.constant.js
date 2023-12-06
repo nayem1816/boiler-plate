@@ -1,12 +1,12 @@
 const userFilterableFields = [
-  "searchTerm",
-  "fullName",
-  "email",
-  "gender",
-  "phone",
+  'searchTerm',
+  'fullName',
+  'email',
+  'gender',
+  'phone',
 ];
 
-const userSearchableFields = ["fullName"];
+const userSearchableFields = ['fullName'];
 
 module.exports = {
   userFilterableFields,

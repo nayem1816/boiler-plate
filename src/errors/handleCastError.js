@@ -1,15 +1,15 @@
-const handleCastError = (error) => {
+const handleCastError = error => {
   const errors = [
     {
       path: error.path,
-      message: "Invalid Id",
+      message: 'Invalid Id',
     },
   ];
 
   const statusCode = 400;
   return {
     statusCode,
-    message: "Cast Error",
+    message: 'Cast Error',
     errorMessages: errors,
   };
 };

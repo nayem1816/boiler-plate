@@ -1,12 +1,12 @@
-const paginationFields = require("../../../constants/pagination");
-const pick = require("../../../shared/pick");
-const sendResponse = require("../../../shared/sendResponse");
-const { userFilterableFields } = require("./user.constant");
-const UserService = require("./user.services");
+const paginationFields = require('../../../constants/pagination');
+const pick = require('../../../shared/pick');
+const sendResponse = require('../../../shared/sendResponse');
+const { userFilterableFields } = require('./user.constant');
+const UserService = require('./user.services');
 
 const createUser = async (req, res, next) => {
   try {
-    const file = req.file;
+    const { file } = req;
 
     let profileImage = {};
 
@@ -17,14 +17,16 @@ const createUser = async (req, res, next) => {
       };
     }
 
-    const result = await UserService.createUserService(req.body, imageData);
+    const result = await UserService.createUserService(req.body, profileImage);
 
-    const { password, ...userData } = result._doc;
+    const userData = result._doc;
+
+    delete userData.password;
 
     sendResponse(res, {
       statusCode: 201,
       success: true,
-      message: "User created successfully",
+      message: 'User created successfully',
       data: userData,
     });
   } catch (error) {
@@ -38,13 +40,13 @@ const getAllUsers = async (req, res, next) => {
     const paginationOptions = pick(req.query, paginationFields);
     const result = await UserService.getAllUsersService(
       filters,
-      paginationOptions
+      paginationOptions,
     );
 
     sendResponse(res, {
       statusCode: 200,
       success: true,
-      message: "All Users",
+      message: 'All Users',
       data: result,
     });
   } catch (error) {
@@ -54,14 +56,14 @@ const getAllUsers = async (req, res, next) => {
 
 const getMyProfile = async (req, res, next) => {
   try {
-    const userId = req.userId;
+    const { userId } = req;
 
     const result = await UserService.getMyProfileService(userId);
 
     sendResponse(res, {
       statusCode: 200,
       success: true,
-      message: "My Profile",
+      message: 'My Profile',
       data: result,
     });
   } catch (error) {

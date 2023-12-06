@@ -1,3 +1,3 @@
-const paginationFields = ["page", "limit", "sortBy", "sortOrder"];
+const paginationFields = ['page', 'limit', 'sortBy', 'sortOrder'];
 
 module.exports = paginationFields;

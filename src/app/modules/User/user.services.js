@@ -1,10 +1,10 @@
-const ApiError = require("../../../errors/apiError");
-const { paginationHelpers } = require("../../../helpers/paginationHelpers");
-const { userSearchableFields } = require("./user.constant");
-const User = require("./user.model");
+const ApiError = require('../../../errors/apiError');
+const { paginationHelpers } = require('../../../helpers/paginationHelpers');
+const { userSearchableFields } = require('./user.constant');
+const User = require('./user.model');
 
 const createUserService = async (payload, imageData) => {
-  const requiredFields = ["fullName", "email", "password", "phone", "role"];
+  const requiredFields = ['fullName', 'email', 'password', 'phone', 'role'];
 
   for (const field of requiredFields) {
     if (!payload[field]) {
@@ -15,11 +15,11 @@ const createUserService = async (payload, imageData) => {
   const isExistUser = await User.findOne({ email: payload.email });
 
   if (isExistUser) {
-    throw new ApiError(400, "Email already exist");
+    throw new ApiError(400, 'Email already exist');
   }
 
   if (!imageData.url) {
-    throw new ApiError(400, "Please provide user image");
+    throw new ApiError(400, 'Please provide user image');
   }
 
   const newData = {
@@ -42,10 +42,10 @@ const getAllUsersService = async (filters, paginationOptions) => {
   const matchStage = {};
 
   if (searchTerm) {
-    const searchConditions = userSearchableFields.map((field) => ({
+    const searchConditions = userSearchableFields.map(field => ({
       [field]: {
         $regex: searchTerm,
-        $options: "i",
+        $options: 'i',
       },
     }));
 
@@ -97,11 +97,11 @@ const getAllUsersService = async (filters, paginationOptions) => {
   };
 };
 
-const getMyProfileService = async (userId) => {
+const getMyProfileService = async userId => {
   const result = await User.findById(userId);
 
   if (!result) {
-    throw new ApiError(404, "User not found");
+    throw new ApiError(404, 'User not found');
   }
 
   return result;

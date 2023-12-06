@@ -1,4 +1,4 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 
 const createToken = (payload, secret, expireTime) => {
   return jwt.sign(payload, secret, {

@@ -1,7 +1,7 @@
-const fs = require("fs");
+const fs = require('fs');
 
-const CreateUploadsFile = (directory) => {
-  directory.forEach((dir) => {
+const CreateUploadsFile = directory => {
+  directory.forEach(dir => {
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
