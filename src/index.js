@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const app = require('./app');
 const config = require('./config/config');
 
-console.log('Hello 1');
+console.log('Hello 2');
 
 async function main() {
   try {
