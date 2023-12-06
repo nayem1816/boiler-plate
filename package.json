@@ -18,9 +18,6 @@
       "pre-commit": "npm run lint-prettier"
     }
   },
-  "lint-staged": {
-    "*.js": "npm run lint-prettier"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
