@@ -6,12 +6,15 @@
   "scripts": {
     "dev": "nodemon src/index.js",
     "start": "node src/index.js",
-    "lint:check": "eslint .js",
+    "lint:check": "eslint --ignore-path .eslintignore --ext .js .",
     "lint:fix": "eslint . --fix",
     "prettier:check": "prettier --ignore-path .gitignore --write \"**/*.+(js|json)\"",
     "prettier:fix": "prettier --write .",
-    "lint-prettier": "npm run lint:check && npm run prettier:check",
+    "lint-prettier": "npm run lint:check && npm run prettier:check && git diff --exit-code",
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "lint-staged": {
+    "src/**/*.js": "npm run lint-prettier"
   },
   "keywords": [],
   "author": "",
@@ -36,9 +39,6 @@
     "nodemon": "^3.0.1",
     "validator": "^13.11.0",
     "xlsx": "^0.18.5"
-  },
-  "lint-staged": {
-    "src/**/*.js": "npm run lint-prettier"
   },
   "nodemonConfig": {
     "ignore": [
